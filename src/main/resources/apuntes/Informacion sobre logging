@@ -1,0 +1,40 @@
+logging.exception-conversion-word
+LOG_EXCEPTION_CONVERSION_WORD
+La palabra de conversión utilizada al registrar excepciones.
+
+logging.file
+LOG_FILE
+Si se define, se usa en la configuración de registro predeterminada.
+
+logging.file.max-size
+LOG_FILE_MAX_SIZE
+Tamaño máximo del archivo de registro (si LOG_FILE está habilitado). (Solo se admite con la configuración predeterminada de Logback).
+
+logging.file.max-history
+LOG_FILE_MAX_HISTORY
+Número máximo de archivos de registro para guardar (si LOG_FILE está habilitado). (Solo se admite con la configuración predeterminada de Logback).
+
+logging.path
+LOG_PATH
+Si se define, se usa en la configuración de registro predeterminada.
+
+logging.pattern.console
+CONSOLE_LOG_PATTERN
+El patrón de registro para usar en la consola (stdout). (Solo se admite con la configuración predeterminada de Logback).
+
+logging.pattern.dateformat
+LOG_DATEFORMAT_PATTERN
+Patrón de agregado para el formato de fecha de registro. (Solo se admite con la configuración predeterminada de Logback).
+
+logging.pattern.file
+FILE_LOG_PATTERN
+El patrón de registro para usar en un archivo (si LOG_FILEestá habilitado). (Solo se admite con la configuración predeterminada de Logback).
+
+logging.pattern.level
+LOG_LEVEL_PATTERN
+El formato a utilizar al representar el nivel de registro (predeterminado %5p). (Solo se admite con la configuración predeterminada de Logback).
+
+PID
+PID
+El ID del proceso actual (descubierto si es posible y cuando aún no está definido como una variable de entorno del sistema operativo).
+
