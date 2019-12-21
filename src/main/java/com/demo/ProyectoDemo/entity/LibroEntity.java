@@ -9,8 +9,6 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import com.demo.ProyectoDemo.validator.Clasificacion;
-
 @Entity
 public class LibroEntity {
 	
@@ -24,7 +22,6 @@ public class LibroEntity {
 	@NotEmpty(message = "Ingrese un titulo")
 	private String titulo;
 	
-	@Clasificacion
 	@NotEmpty(message = "Ingrese una clasificacion")
 	private String clasificacion;
 	
