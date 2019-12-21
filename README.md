@@ -1,92 +1,84 @@
 # Demo: Spring Boot + Java
 
-Demo de un proyecto Java con Spring Boot
+Demo básico de un proyecto Java con Spring Boot
 
-## Comenzando 🚀
+### Construcción del Proyecto 📦
 
-_Este curso tiene diversas clases, las cuales están enumeradas y ordenadas consecutivamente._
-
-_La forma correcta para iniciar este curso es:_
-```
-📌 1) Importar el actual repositorio con el IDE de su preferencia.
-📌 2) Desde el IDE, seleccionar el BRANCH(Clase-01), para visualizar solo las fuentes referentes a la primera clase.
-📌 3) De la misma forma, en esta página se debe seleccionar el BRANCH(Clase-01) para ver la explicación de lo implementado.
-📌 4) Ahora que ya tenemos todo listo, procederemos a revisar las instrucciones de la página y revisar las fuentes que hemos descargado en el IDE.
-📌 5) Para iniciar la Clase-02 o sucesivas, seguiremos nuevamente los pasos 2,3 y 4.
-```
-
-_Tener en cuenta que, para elegir una clase en este repositorio, usted debe dirigirse a la sección BRANCH y luego seleccionar una clase como se muestra a continuación. (Ejemplo: Quiero visualizar la Clase02)_
-
-![Error: imagen no ha sido cargada](https://github.com/gcquirozguzman/java-spring-boot-201910/blob/master/Informacion_Seleccion_Clase.png)
-
-## Herramientas 🛠️
-
-_Para la implementación del aplicativo se usaron las siguientes herramientas._
-
-🔧 [JDK 12.0.2]
-```
-📢 Link Descarga - https://www.oracle.com/technetwork/java/javase/downloads/jdk12-downloads-5295953.html
-```
-🔧 [Eclipse 2019-09]
-```
-📢 Link Descarga - https://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/2019-09/R/eclipse-jee-2019-09-R-win32-x86_64.zip&mirror_id=576
-```
-🔧 [Apache Maven 3.6.2]
-```
-📢 Link Descarga - http://apache.dattatec.com/maven/maven-3/3.6.2/binaries/apache-maven-3.6.2-bin.zip
-```
-🔧 [Git SCM 2.23.0]
-```
-📢 Link Descarga - https://github.com/git-for-windows/git/releases/download/v2.23.0.windows.1/Git-2.23.0-64-bit.exe
-```
-🔧 [Node 10.16.3]
-```
-📢 Link Descarga - https://nodejs.org/dist/v10.16.3/node-v10.16.3-x64.msi
-```
-🔧 [PostgreSQL 12.0]
-```
-📢 Link Descarga - https://www.enterprisedb.com/thank-you-downloading-postgresql?anid=1256972
-```
-🔧 [Postman 7.9.0]
-```
-📢 Link Descarga - https://dl.pstmn.io/download/latest/win64
-```
-
-## Versionado 📌
-
-_Para descargar las fuentes del proyecto se deberán seguir los siguientes pasos._
-
-💻 [Instrucción para Descarga]
-```
-🔥 $ git clone https://github.com/gcquirozguzman/java-spring-boot-201910.git
-```
-
-### Despliegue 📋
-
-_Para iniciar el proyecto es necesario seguir los siguientes pasos._
-
-```
-👊 Desde IDE Eclipse
-
-🖇️ Desde la aplicación nos posicionamos en la clase principal. Esta clase está identificado por la anotación @SpringBootApplication.
-🖇️ Clic en ProyectoDemoApplication.java ➜ Run as ➜ Java Application
-🖇️ Verificamos ingresando al link http://localhost:8080/ProyectoDemo
-
-👊 Desde Consola
-
-🖇️ $ cd java-spring-boot-201910
-🖇️ $ mvn spring-boot:run
+_Clase 9: Spring Security para Servicios._
 
 ```
 
-### Solución de Errores 💣
+📢 Para agregar Spring Security a nuestro proyecto, necesitaremos adicionar la siguiente dependencia.
+	
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-security</artifactId>
+	</dependency>
 
-_En esta parte se detalla la solución a los diferentes errores que puedan aparecer al iniciar el aplicativo._
+📢  Luego de haber agregado dicha dependencia, nuestro proyecto estará protegido. Podemos probar los servicios que tenemos hasta el momento, debemos importar desde el proyecto POSTMAN con la siguiente ruta (Clase 09).
 
-📞 [Se detiene la descarga de librerías]
-```
-👊 1) Nos posicionamos con la consola de windows sobre la ruta donde esta nuestro proyecto.
-👊 2) Ingresamos la siguiente instrucción - mvn clean install.
+	https://www.getpostman.com/collections/6ed42c8d9fe314e1b3ec
+	
+📢  Si intentamos consumir "ListarTodos", nos saltará la siguiente validación.
+
+	{
+	    "timestamp": "",
+	    "status": 401,
+	    "error": "Unauthorized",
+	    "message": "Unauthorized",
+	    "path": "/ProyectoDemo/libro/listarTodos"
+	}
+
+📢  Ahora, para poder consumir los servicios, necesitamos ingresar el usuario y password que nos ha asignado Spring Security. Por defecto el usuario es USER y la clase la debemos buscar en la consola:
+
+	Using generated security password: (ACA ESTÁ EL PASSWORD)	
+
+📢  Para poder ingresar el usuario y password, podemos ir al servicio requerido, en la pestaña "Authorization". Seleccionamos en TYPE, la opción "Basic Auth". Completamos lo solicitado en las casillas.
+
+	Username: user
+	Password: (Password obtenido en la consola)
+	
+📢  Si queremos una configuración más flexible, con múltiples usuarios y roles, iniciaremos agregando al proyecto lo siguiente.
+📢  Creamos el siguiente paquete.
+
+	com.demo.ProyectoDemo.config
+	
+📢  Dentro del paquete com.demo.ProyectoDemo.config se creará la clase SpringSecurityConfig.java.
+📢  Iniciamos agregando la anotación @Configuration a la clase. Esto indica que una clase declara uno o más métodos @Bean.
+📢  Extendemos WebSecurityConfigurerAdapter en la clase para habilitar la seguridad HTTP en Spring.
+📢  Creamos el siguiente método. Esto con la finalidad de agregar 2 usuario y password.
+	
+	Usuario: user	Password: password	Rol Asignado: USER
+	Usuario: admin	Password: password	Rol Asignado: USER - ADMIN
+
+    	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.inMemoryAuthentication()
+		.withUser("user").password("{noop}password").roles("USER")
+		.and()
+		.withUser("admin").password("{noop}password").roles("USER", "ADMIN");
+	}
+
+📢  Podemos probar agregando estas credenciales en POSTMAN para validar.
+📢  Para agregar accesos a las diferentes solicitudes HTTP o asignar accesos a los usuarios por soles debemos implementar lo siguiente:
+
+	protected void configure(HttpSecurity http) throws Exception {
+		http
+			.httpBasic()							// Habilitar la autenticación básica
+			.and()
+			.authorizeRequests()						// Permite restringir el acceso
+			.antMatchers(HttpMethod.GET, "/libro/**").hasRole("USER")	// Se asignan accesos por rol
+			.antMatchers(HttpMethod.POST, "/libro/**").hasRole("ADMIN")	// Se asignan accesos por rol
+			.antMatchers(HttpMethod.PUT, "/libro/**").hasRole("ADMIN")	// Se asignan accesos por rol
+			.antMatchers(HttpMethod.PATCH, "/libro/**").hasRole("ADMIN")	// Se asignan accesos por rol
+			.antMatchers(HttpMethod.DELETE, "/libro/**").hasRole("ADMIN")	// Se asignan accesos por rol
+			.anyRequest().authenticated()					// Inica que cualquier solicitud debe autenticarse
+			.and()
+			.csrf().disable()						// Agrega soporte CSRF.
+			.formLogin().disable();						// Especifica para admitir la autenticación basada en formularios.
+    	}
+
+📢  Podemos probar los accesos por roles en POSTMAN. Por ejemplo, si ingreso a la solicitud POST con el usuario "user", no me debería permitir la operación.
+
 ```
 
 ## Autores ✒️
