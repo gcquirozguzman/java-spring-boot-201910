@@ -1,92 +1,107 @@
 # Demo: Spring Boot + Java
 
-Demo de un proyecto Java con Spring Boot
+Demo básico de un proyecto Java con Spring Boot
 
-## Comenzando 🚀
+### Construcción del Proyecto 📦
 
-_Este curso tiene diversas clases, las cuales están enumeradas y ordenadas consecutivamente._
-
-_La forma correcta para iniciar este curso es:_
-```
-📌 1) Importar el actual repositorio con el IDE de su preferencia.
-📌 2) Desde el IDE, seleccionar el BRANCH(Clase-01), para visualizar solo las fuentes referentes a la primera clase.
-📌 3) De la misma forma, en esta página se debe seleccionar el BRANCH(Clase-01) para ver la explicación de lo implementado.
-📌 4) Ahora que ya tenemos todo listo, procederemos a revisar las instrucciones de la página y revisar las fuentes que hemos descargado en el IDE.
-📌 5) Para iniciar la Clase-02 o sucesivas, seguiremos nuevamente los pasos 2,3 y 4.
-```
-
-_Tener en cuenta que, para elegir una clase en este repositorio, usted debe dirigirse a la sección BRANCH y luego seleccionar una clase como se muestra a continuación. (Ejemplo: Quiero visualizar la Clase02)_
-
-![Error: imagen no ha sido cargada](https://github.com/gcquirozguzman/java-spring-boot-201910/blob/master/Informacion_Seleccion_Clase.png)
-
-## Herramientas 🛠️
-
-_Para la implementación del aplicativo se usaron las siguientes herramientas._
-
-🔧 [JDK 12.0.2]
-```
-📢 Link Descarga - https://www.oracle.com/technetwork/java/javase/downloads/jdk12-downloads-5295953.html
-```
-🔧 [Eclipse 2019-09]
-```
-📢 Link Descarga - https://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/2019-09/R/eclipse-jee-2019-09-R-win32-x86_64.zip&mirror_id=576
-```
-🔧 [Apache Maven 3.6.2]
-```
-📢 Link Descarga - http://apache.dattatec.com/maven/maven-3/3.6.2/binaries/apache-maven-3.6.2-bin.zip
-```
-🔧 [Git SCM 2.23.0]
-```
-📢 Link Descarga - https://github.com/git-for-windows/git/releases/download/v2.23.0.windows.1/Git-2.23.0-64-bit.exe
-```
-🔧 [Node 10.16.3]
-```
-📢 Link Descarga - https://nodejs.org/dist/v10.16.3/node-v10.16.3-x64.msi
-```
-🔧 [PostgreSQL 12.0]
-```
-📢 Link Descarga - https://www.enterprisedb.com/thank-you-downloading-postgresql?anid=1256972
-```
-🔧 [Postman 7.9.0]
-```
-📢 Link Descarga - https://dl.pstmn.io/download/latest/win64
-```
-
-## Versionado 📌
-
-_Para descargar las fuentes del proyecto se deberán seguir los siguientes pasos._
-
-💻 [Instrucción para Descarga]
-```
-🔥 $ git clone https://github.com/gcquirozguzman/java-spring-boot-201910.git
-```
-
-### Despliegue 📋
-
-_Para iniciar el proyecto es necesario seguir los siguientes pasos._
+_Clase 6: Implementación de Servicios._
 
 ```
-👊 Desde IDE Eclipse
+📢 Creamos el siguiente paquete.
 
-🖇️ Desde la aplicación nos posicionamos en la clase principal. Esta clase está identificado por la anotación @SpringBootApplication.
-🖇️ Clic en ProyectoDemoApplication.java ➜ Run as ➜ Java Application
-🖇️ Verificamos ingresando al link http://localhost:8080/ProyectoDemo
+	com.demo.ProyectoDemo.restController
 
-👊 Desde Consola
+📢  En el paquete com.demo.ProyectoDemo.restController creamos la siguiente clase:
+	
+	LibroRestController
 
-🖇️ $ cd java-spring-boot-201910
-🖇️ $ mvn spring-boot:run
+📢  Usaremos las siguientes anotaciones para poder diferentes tipos de servicios.
+	
+	@RestController - Permite que la clase se publique como un Spring REST Service.
+	@RequestMapping - Permite relacionar un método con una petición http.
+	@ResponseStatus - Permite mandar un estado de respuesta. Por ejemplo CREATED.
+	
+	@GetMapping = RequestMethod.GET
+	@PostMapping = RequestMethod.POST
+	@DeleteMapping = RequestMethod.DELETE
+	@PutMapping = RequestMethod.PUT
+	@PatchMapping = RequestMethod.PATCH
+	
+📢  Primero agregamos la anotación @RestController a la clase. De la misma manera, adicionamos @RequestMapping, para indicar que todos nuestros servicios parten de la ruta "libro/". Ejemplo "libro/grabar", "libro/actualizar" o "libro/buscar"
 
-```
+📢  Llamaremos al repositorio LibroRepository y agregaremos @Autowired para que se realice la inyección automática.
+📢  A continuación crearemos el método listarTodos.
+	
+	listarTodos - @GetMapping("listarTodos")
+	libroRepository.findAll()
 
-### Solución de Errores 💣
+📢  A continuación crearemos el método crear. Llamamos al repositorio libroRepository y a su método save, enviándole como parámetro a LibroEntity. Podemos darnos cuenta que nosotros no hemos creado este método, pero como se comentó, al heredar JpaRepository traemos a todos sus métodos.
 
-_En esta parte se detalla la solución a los diferentes errores que puedan aparecer al iniciar el aplicativo._
+	crear - @PostMapping("crear")
+	libroRepository.save(libroEntity)
 
-📞 [Se detiene la descarga de librerías]
-```
-👊 1) Nos posicionamos con la consola de windows sobre la ruta donde esta nuestro proyecto.
-👊 2) Ingresamos la siguiente instrucción - mvn clean install.
+📢  A continuación crearemos el método buscarById. Llamamos al método findById y le enviamos como parámetro el ID. Para solucionar la advertencia que nos hace Java, debemos de agregar la excepción en caso no se encuentre un registro en el ID solicitado. 
+
+	buscarById - @GetMapping("buscar/{id}")
+	libroRepository.findById(id)
+	.orElseThrow( 								// 1) En caso suceda un error.
+		() -> 								// 2) No recuperamos ningún parámetro.
+		new LibroNotFoundException(id)					// 3) Enviamos la excepción LibroNotFoundException.
+	);
+	
+📢  A continuación crearemos el método eliminar. Llamamos al método deleteById y le enviamos como parámetro el ID. 
+
+	eliminar - @DeleteMapping("eliminar/{id}")
+	libroRepository.deleteById(id)
+
+📢  A continuación crearemos el método grabarActualizar. Inicialmente llamamos al método findById y le enviamos como parámetro el ID. Si el resultado retorna un valor, actualiza. Caso contrario, crea un registro nuevo.
+
+	grabarActualizar - @PutMapping("actualizarCrear/{id}")
+	libroRepository.findById(id)						// 1) Se busca un registro por ID.
+	.map(									// 2) Si encuentra registro ingresamos a esta opción.
+		x -> {								// 3) X contiene el resultado de la búsqueda.
+			x.setAutor(libroEntity.getAutor());			// 4) Actualizamos autor.
+			x.setClasificacion(libroEntity.getClasificacion());	// 5) Actualizamos clasificación.
+			x.setTitulo(libroEntity.getTitulo());			// 6) Actualizamos título.
+			x.setPrecio(libroEntity.getPrecio());			// 7) Actualizamos precio.
+			return libroRepository.save(x);				// 8) Grabamos cambios.
+		}
+	)
+	.orElseGet(								// 9) En caso no se encuentre registro.
+		() -> {								// 10) No recuperamos ningún parámetro.
+			return libroRepository.save(libroEntity);		// 11) Grabamos cambios.
+		}
+	);	
+
+📢  A continuación crearemos el método actualizarPatch.	Inicialmente llamamos al método findById y le enviamos como parámetro el ID. Para usar este método, consideremos que queremos servicio que solo modifique sus atributos a petición.
+	
+	{
+		"autor": "Mario Vargas Llosa"					// Trama de envio. Solo quiero que se modifique autor.
+	}
+	
+	actualizarPatch - @PatchMapping("actualizar/{id}")
+	libroRepository.findById(id)						// 1) Se busca un registro por ID.
+	.map(									// 2) Si encuentra registro ingresamos a esta opción.
+		x -> {								// 3) X contiene el resultado de la búsqueda.
+			String autor = parametro.get("autor");			// 4) Buscamos el valor enviado. En este caso autor.
+			if(!StringUtils.isEmpty(autor)) {			// 5) Verificamos que no sea nulo.
+				x.setAutor(autor);				// 6) Actualizamos atributo.
+				return libroRepository.save(x);			// 7) Grabamos cambios.
+			} else {						// 8) En caso no se ha enviado autor.
+				throw new 					
+				LibroUnSupportedFieldPatchException(		// 9) Llamamos a la excepción LibroUnSupportedFieldPatchException.
+					parametro.keySet()			// 10) Enviamos como parámetro el valor enviado al servicio.
+				);
+			}
+
+		}
+	)
+	.orElseGet(								// 11) En caso no se encuentre registro.
+		() -> {								// 12) No recuperamos ningún parámetro.
+			throw new LibroNotFoundException(id);			// 13) Enviamos la excepción LibroNotFoundException.
+		}
+	);
+
 ```
 
 ## Autores ✒️
