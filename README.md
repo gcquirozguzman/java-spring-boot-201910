@@ -1,92 +1,68 @@
 # Demo: Spring Boot + Java
 
-Demo de un proyecto Java con Spring Boot
+Demo básico de un proyecto Java con Spring Boot
 
-## Comenzando 🚀
+### Construcción del Proyecto 📦
 
-_Este curso tiene diversas clases, las cuales están enumeradas y ordenadas consecutivamente._
-
-_La forma correcta para iniciar este curso es:_
-```
-📌 1) Importar el actual repositorio con el IDE de su preferencia.
-📌 2) Desde el IDE, seleccionar el BRANCH(Clase-01), para visualizar solo las fuentes referentes a la primera clase.
-📌 3) De la misma forma, en esta página se debe seleccionar el BRANCH(Clase-01) para ver la explicación de lo implementado.
-📌 4) Ahora que ya tenemos todo listo, procederemos a revisar las instrucciones de la página y revisar las fuentes que hemos descargado en el IDE.
-📌 5) Para iniciar la Clase-02 o sucesivas, seguiremos nuevamente los pasos 2,3 y 4.
-```
-
-_Tener en cuenta que, para elegir una clase en este repositorio, usted debe dirigirse a la sección BRANCH y luego seleccionar una clase como se muestra a continuación. (Ejemplo: Quiero visualizar la Clase02)_
-
-![Error: imagen no ha sido cargada](https://github.com/gcquirozguzman/java-spring-boot-201910/blob/master/Informacion_Seleccion_Clase.png)
-
-## Herramientas 🛠️
-
-_Para la implementación del aplicativo se usaron las siguientes herramientas._
-
-🔧 [JDK 12.0.2]
-```
-📢 Link Descarga - https://www.oracle.com/technetwork/java/javase/downloads/jdk12-downloads-5295953.html
-```
-🔧 [Eclipse 2019-09]
-```
-📢 Link Descarga - https://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/2019-09/R/eclipse-jee-2019-09-R-win32-x86_64.zip&mirror_id=576
-```
-🔧 [Apache Maven 3.6.2]
-```
-📢 Link Descarga - http://apache.dattatec.com/maven/maven-3/3.6.2/binaries/apache-maven-3.6.2-bin.zip
-```
-🔧 [Git SCM 2.23.0]
-```
-📢 Link Descarga - https://github.com/git-for-windows/git/releases/download/v2.23.0.windows.1/Git-2.23.0-64-bit.exe
-```
-🔧 [Node 10.16.3]
-```
-📢 Link Descarga - https://nodejs.org/dist/v10.16.3/node-v10.16.3-x64.msi
-```
-🔧 [PostgreSQL 12.0]
-```
-📢 Link Descarga - https://www.enterprisedb.com/thank-you-downloading-postgresql?anid=1256972
-```
-🔧 [Postman 7.9.0]
-```
-📢 Link Descarga - https://dl.pstmn.io/download/latest/win64
-```
-
-## Versionado 📌
-
-_Para descargar las fuentes del proyecto se deberán seguir los siguientes pasos._
-
-💻 [Instrucción para Descarga]
-```
-🔥 $ git clone https://github.com/gcquirozguzman/java-spring-boot-201910.git
-```
-
-### Despliegue 📋
-
-_Para iniciar el proyecto es necesario seguir los siguientes pasos._
-
-```
-👊 Desde IDE Eclipse
-
-🖇️ Desde la aplicación nos posicionamos en la clase principal. Esta clase está identificado por la anotación @SpringBootApplication.
-🖇️ Clic en ProyectoDemoApplication.java ➜ Run as ➜ Java Application
-🖇️ Verificamos ingresando al link http://localhost:8080/ProyectoDemo
-
-👊 Desde Consola
-
-🖇️ $ cd java-spring-boot-201910
-🖇️ $ mvn spring-boot:run
+_Clase 8: Thymeleaf para Configuración de Ambiente._
 
 ```
 
-### Solución de Errores 💣
+📢  Spring Boot nos permite usar archivos properties, yml(Thymeleaf), variables de entorno y argumentos de línea de comandos para externalizar la configuración.
+📢  Para nuestro proyecto, podemos cambiar la libreta "application.properties" a "application.yml". La conversión de las propiedades internas se puede hacer manual, o por utilitarios como:
+	
+	https://localise.biz/free/converter/yml
 
-_En esta parte se detalla la solución a los diferentes errores que puedan aparecer al iniciar el aplicativo._
+📢  Para poder escribir en el archivo "application.yml", es recomendable usar un plugin para ver errores de de escritura en el archivo. Se puede instalar en Eclipse Marketplace el siguiente:
 
-📞 [Se detiene la descarga de librerías]
-```
-👊 1) Nos posicionamos con la consola de windows sobre la ruta donde esta nuestro proyecto.
-👊 2) Ingresamos la siguiente instrucción - mvn clean install.
+	Yaml Editor 1.5.0
+
+📢  La estructura que manejaremos en el archivo yml será la siguiente:
+	
+	server:                                                            
+	  port: 8080                                                       // Indica el puerto donde deseamos que inicie el aplicativo.
+	  servlet:                                                         
+	     contextPath: /ProyectoDemo                                    // Indica la ruta base (http://localhost:8080/ProyectoDemo).
+																	 
+	spring:                                                            
+	  spring.main.banner-mode: off                                     // Off/On - Para que muestre o no el logo de Spring 
+	  jpa:                                                             
+	     properties.hibernate.format_sql: true                         // Da formato a las sentencias hibernate.
+	  profiles:                                                        
+	    active: ambiente_desarrollo                                    // Indica que ambiente esta activo																 
+	---                                                                // Se inicia la configuración de log que pertenece a ambiente_desarrollo.
+																	 
+	spring:                                                            
+	  profiles: ambiente_desarrollo                                    // Perfil al que pertenece este bloque de configuración.
+	logging:                                                           
+	  path: logs/dev                                                   // Carpeta donde se guardarán los log.
+	  file: ${logging.path}/${spring.profiles}_profile_app.log         // Nombre del archivo.
+	  file.max-history: 5                                              // Cantidad de archivos máximos a guardar.
+	  file.max-size: 10MB                                              // Máximo tamaño de cada archivo. Luego de superado el tamaño se crea otro.
+	  pattern:                                                         
+	    console: "%d %-5level %logger : %msg%n"                        // Formato del log mostrado en consola.
+	    file: "%d %-5level [%thread] %logger : %msg%n"                 // Formato del log guardado en archivo.
+	  level:                                                           
+	    root: INFO                                                     // Establece el nivel de registro para todo el grupo. 
+	    com.demo: DEBUG						   // Establece el nivel de registro para el paquete. 
+	    org.springframework.web: DEBUG                                 // Información referente a springframework.web
+	    org.hibernate: DEBUG                                           // Información referente a hibernate.
+    	    org.hibernate.type: TRACE					   // Información sobre los valores que se envian a la base de datos.
+
+📢  Se debe tener en cuenta lo siguiente para el manejo de logs.
+
+	DEBUG : Información interesante para desarrolladores, cuando intentan depurar un problema.
+	INFO : Información interesante para el personal de soporte que intenta averiguar el contexto de un error determinado.
+	WARN : Declaraciones que describen eventos o estados potencialmente dañinos en el programa.
+	ERROR : Declaraciones que describen errores no fatales en la aplicación; este nivel se usa con bastante frecuencia para registrar excepciones manejadas.
+	FATAL : Declaraciones que representan las condiciones de error más severas, que supuestamente resultan en la terminación del programa.
+
+📢  Para evitar que los log se suban al repositorio, de deberá agradar la restricción en el archivo gitignore. Este archivo se encuentra a la altura de la carpeta src. Agregar las siguientes lineas.
+
+	### Log Aplicativo ###
+	logs/dev
+	logs/prod
+
 ```
 
 ## Autores ✒️

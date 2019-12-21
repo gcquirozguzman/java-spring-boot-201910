@@ -10,19 +10,6 @@ spring:
      properties.hibernate.format_sql: true 
   profiles:
     active: ambiente_desarrollo
-  thymeleaf:
-    cache: false
-    check-template: true
-    check-template-location: true
-    content-type: text/html
-    enabled: true
-    encoding: UTF-8
-    mode: HTML
-    prefix: classpath:/templates/
-    suffix: .html
-    # excluded-view-names:
-    # template-resolver-order:
-    # view-names:
     
 ---
 
@@ -38,7 +25,8 @@ logging:
     file: "%d %-5level [%thread] %logger : %msg%n"
   level:
     root: INFO 
-    org.springframework.web: DEBUG
+    com.demo: DEBUG
+    org.springframework.web: INFO
     org.hibernate: DEBUG
     org.hibernate.type: TRACE
     
@@ -56,5 +44,7 @@ logging:
     file: "%d %-5level [%thread] %logger : %msg%n"
   level:
     root: WARN 
+    com.demo: WARN
     org.springframework.web: WARN
     org.hibernate: WARN
+    org.hibernate.type: WARN
