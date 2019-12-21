@@ -16,36 +16,13 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<thymeleaf.version>3.0.10.RELEASE</thymeleaf.version>
-	    <thymeleaf-layout-dialect.version>2.3.0</thymeleaf-layout-dialect.version>
-	    <thymeleaf-spring-data-dialect.version>3.3.1</thymeleaf-spring-data-dialect.version>
-	    <thymeleaf-extras-springsecurity5.version>3.0.3.RELEASE</thymeleaf-extras-springsecurity5.version>
-	    <thymeleaf-extras-java8time.version>3.0.1.RELEASE</thymeleaf-extras-java8time.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
-	      <groupId>org.springframework.boot</groupId>
-	      <artifactId>spring-boot-starter-thymeleaf</artifactId>
-	    </dependency>
-	    <dependency>
-            <groupId>org.thymeleaf.extras</groupId>
-            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
-            </dependency>
-	    <dependency>
-	        <groupId>org.thymeleaf.extras</groupId>
-	        <artifactId>thymeleaf-extras-java8time</artifactId>
-	        </dependency>
-	    <dependency>
-	        <groupId>io.github.jpenren</groupId>
-	        <artifactId>thymeleaf-spring-data-dialect</artifactId>
-	        <version>${thymeleaf-spring-data-dialect.version}</version>
-	    </dependency>
-	    <dependency>
-	        <groupId>nz.net.ultraq.thymeleaf</groupId>
-	        <artifactId>thymeleaf-layout-dialect</artifactId>
-	    </dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -62,48 +39,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		
-		<!-- Bootstrap -->
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>4.3.1</version>
-        </dependency>
-        
-        <!-- JQuery -->
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery</artifactId>
-            <version>3.2.1</version>
-        </dependency>
-        
-        <!-- Font Awesome -->
-		<dependency>
-		    <groupId>org.webjars</groupId>
-		    <artifactId>font-awesome</artifactId>
-		    <version>5.11.2</version>
-		</dependency>
-		
-        <!-- JQuery Easing -->
-		<dependency>
-		    <groupId>org.webjars</groupId>
-		    <artifactId>jquery-easing</artifactId>
-		    <version>1.4.1</version>
-		</dependency>
-		
 	</dependencies>
 
 	<build>
