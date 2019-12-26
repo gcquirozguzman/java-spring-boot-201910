@@ -47,7 +47,7 @@ _Para la implementación del aplicativo se usaron las siguientes herramientas._
 ```
 📢 Link Descarga - https://www.enterprisedb.com/thank-you-downloading-postgresql?anid=1256972
 ```
-🔧 [Postman 7.9.0]
+🔧 [Postman 7.14.0]
 ```
 📢 Link Descarga - https://dl.pstmn.io/download/latest/win64
 ```
