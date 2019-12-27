@@ -23,9 +23,9 @@ _Tener en cuenta que, para elegir una clase en este repositorio, usted debe diri
 
 _Para la implementación del aplicativo se usaron las siguientes herramientas._
 
-🔧 [JDK 13.0.1]
+🔧 [JDK 12.0.2]
 ```
-📢 Link Descarga - https://www.oracle.com/technetwork/java/javase/downloads/jdk13-downloads-5672538.html
+📢 Link Descarga - https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase12-5440181.html
 ```
 🔧 [Eclipse 2019-09]
 ```
