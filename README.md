@@ -11,7 +11,7 @@ _Clase 1: Creación de Workspace._
 📢 Seleccionamos las siguientes opciones para la creación:
     Project: Maven Project
     Language: Java
-    Spring Boot: 2.1.9
+    Spring Boot: 2.2.2
     Project Metadata: Group (com.demo) y Artifact (ProyectoDemo)
     Dependencies: Spring Web, Spring Boot DevTools y Thymeleaf
 📢 Descargamos el proyecto (Generate) y descomprimimos.
